@@ -17,6 +17,7 @@ const weatherData = {
 };
 
 app.get('/api/health', (req, res) => {
+  console.log(`[${new Date().toISOString()}] Health check requested`);
   res.json({ 
     status: 'OK', 
     timestamp: new Date().toISOString(),
@@ -26,6 +27,7 @@ app.get('/api/health', (req, res) => {
 
 app.get('/api/weather', (req, res) => {
   const city = req.query.city?.toLowerCase() || 'são paulo';
+  console.log(`[${new Date().toISOString()}] Weather requested for city: ${city}`);
   
   const weather = weatherData[city] || {
     temperature: Math.floor(Math.random() * 15) + 20,
@@ -33,11 +35,14 @@ app.get('/api/weather', (req, res) => {
     humidity: Math.floor(Math.random() * 40) + 40
   };
 
-  res.json({
+  const response = {
     city: req.query.city || 'São Paulo',
     ...weather,
     timestamp: new Date().toISOString()
-  });
+  };
+  
+  console.log(`[${new Date().toISOString()}] Returning weather data:`, response);
+  res.json(response);
 });
 
 app.listen(PORT, () => {
