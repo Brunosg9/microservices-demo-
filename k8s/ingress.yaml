@@ -3,20 +3,15 @@ kind: Ingress
 metadata:
   name: app-ingress
   annotations:
-    kubernetes.io/ingress.class: alb
     alb.ingress.kubernetes.io/scheme: internet-facing
     alb.ingress.kubernetes.io/target-type: ip
+    alb.ingress.kubernetes.io/load-balancer-name: microservices-demo-alb
+    alb.ingress.kubernetes.io/tags: Environment=production,Application=microservices-demo
 spec:
+  ingressClassName: alb
   rules:
   - http:
       paths:
-      - path: /
-        pathType: Prefix
-        backend:
-          service:
-            name: frontend-service
-            port:
-              number: 80
       - path: /api
         pathType: Prefix
         backend:
@@ -24,5 +19,10 @@ spec:
             name: backend-service
             port:
               number: 3001
-
-# teste
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: frontend-service
+            port:
+              number: 80
