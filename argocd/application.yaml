@@ -6,7 +6,7 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: https://github.com/<username>/microservices-demo
+    repoURL: https://github.com/Brunosg9/microservices-demo-
     targetRevision: HEAD
     path: k8s
   destination:
